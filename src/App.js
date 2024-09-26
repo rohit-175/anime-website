@@ -12,6 +12,13 @@ const App = () => {
 
   const API_URL = `https://api.jikan.moe/v4/search/anime?q=${searchTerm}&limit=12`;
 
+  const handleKeyDown = async (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      await searchAnime(searchTerm);
+    }
+  };
+
   const searchAnime = async(title) => {
     try {
       const response = await fetch(`https://api.jikan.moe/v4/anime?q=${title}&limit=12`);
@@ -38,6 +45,7 @@ const App = () => {
       <div className='search'>
         <input placeholder='Search for animes'
         value = {searchTerm}
+        onKeyDown={handleKeyDown}
         onChange={(e) => setSearchTerm(e.target.value)}
         />
         <img src={searchicon}
